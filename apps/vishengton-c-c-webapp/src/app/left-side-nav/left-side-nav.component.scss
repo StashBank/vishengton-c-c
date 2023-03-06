@@ -9,7 +9,7 @@ $warn-palette: map.get($color-config, 'warn');
 $is-dark-theme: map.get($color-config, 'is-dark');
 
 .nav-menu {
-  @apply h-full w-60;
+  @apply h-full w-60 cursor-pointer;
   background-color: $primary-palette;
   &-item {
     background-color: $accent-palette;

@@ -1,10 +1,10 @@
 import { RouterModule } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { map, Observable } from 'rxjs';
 
 import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
+import { IStorageValue, localStorageValue } from '@opavlovskyi/utils';
 import { CoreModule } from '@vcc/ui/core';
 import { LeftSideNavComponent } from './left-side-nav/left-side-nav.component';
 import { AppModule } from './app.module';
@@ -22,7 +22,7 @@ import { FormControl } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
   darkModeCtrl = new FormControl();
 
@@ -36,21 +36,18 @@ export class AppComponent {
     );
   }
 
+  @localStorageValue<boolean>('dark-mode', true)
+  private darkModeValue!: IStorageValue<boolean>;
+
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
     private readonly firestore: FirebaseAppService
   ) {}
 
-  ngOnInit() {
-    const darkModeJson = localStorage.getItem('dark-mode');
-    if (darkModeJson) {
-      try {
-        const darkMode = JSON.parse(darkModeJson);
-        this.darkModeCtrl.setValue(darkMode)
-        this.toggleDarkTheme(darkMode)
-      } catch (e){ null }
-    }
+  ngOnInit(): void {
     this.darkModeCtrl.valueChanges.subscribe(checked => this.toggleDarkTheme(checked))
+    const darkMode = this.darkModeValue.get();
+    this.darkModeCtrl.setValue(darkMode)
   }
 
   toggleDarkTheme(checked: boolean) {
@@ -59,7 +56,7 @@ export class AppComponent {
     } else {
       document.body.classList.remove('dark')
     }
-    localStorage.setItem('dark-mode', JSON.stringify(checked));
+    this.darkModeValue.set(checked);
   }
 
   async signIn() {
