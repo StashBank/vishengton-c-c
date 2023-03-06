@@ -1,7 +1,9 @@
 <ng-container *ngIf="isAuthorized$ | async">
   <mat-list class="nav-menu">
     <ng-container *ngFor="let item of menuNavItems; let idx = index">
-      <mat-list-item class="nav-menu-item" (click)="onMenuItemClick(item)">{{ item.title }}</mat-list-item>
+      <mat-list-item class="nav-menu-item" (click)="onMenuItemClick(item)">
+        <div>{{ item.title }}</div>
+      </mat-list-item>
       <mat-divider class="nav-menu-devider"></mat-divider>
     </ng-container>
   </mat-list>
