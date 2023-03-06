@@ -16,9 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@opavlovskyi/ui/common": ["libs/opavlovskyi/ui/common/src/index.ts"],
-      "@opavlovskyi/ui/components": [
-        "libs/opavlovskyi/components/src/index.ts"
-      ],
       "@opavlovskyi/utils": ["libs/opavlovskyi/utils/src/index.ts"]
     }
   },
