@@ -1,42 +1,68 @@
 import { RouterModule } from '@angular/router';
-import { ChangeDetectorRef, Component } from '@angular/core';
-
-import { CoreModule } from '@vcc/ui/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { LeftSideNavComponent } from './left-side-nav/left-side-nav.component';
+import { Component } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { map, Observable } from 'rxjs';
+
+import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
+import { CoreModule } from '@vcc/ui/core';
+import { LeftSideNavComponent } from './left-side-nav/left-side-nav.component';
+import { AppModule } from './app.module';
+import { FormControl } from '@angular/forms';
 
 @Component({
   standalone: true,
   imports: [
     RouterModule,
     CoreModule,
-    LeftSideNavComponent
+    AppModule,
+    LeftSideNavComponent,
   ],
   selector: 'vcc-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  mobileQuery: MediaQueryList;
 
-  private _mobileQueryListener: () => void;
+  darkModeCtrl = new FormControl();
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
-    this.mobileQuery = media.matchMedia('(max-width: 600px)');
-    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
-    this.mobileQuery.addListener(this._mobileQueryListener);
+  get isAuthorized$(): Observable<boolean> {
+    return this.firestore.isAuthorized$;
   }
 
-  ngOnDestroy(): void {
-    this.mobileQuery.removeListener(this._mobileQueryListener);
+  get isMobile$(): Observable<boolean> {
+    return this.breakpointObserver.observe(Breakpoints.XSmall).pipe(
+      map(state => state.matches)
+    );
   }
 
-  toggleDarkTheme(evt: MatSlideToggleChange) {
-    if (evt.checked) {
+  constructor(
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly firestore: FirebaseAppService
+  ) {}
+
+  ngOnInit() {
+    const darkModeJson = localStorage.getItem('dark-mode');
+    if (darkModeJson) {
+      try {
+        const darkMode = JSON.parse(darkModeJson);
+        this.darkModeCtrl.setValue(darkMode)
+        this.toggleDarkTheme(darkMode)
+      } catch (e){ null }
+    }
+    this.darkModeCtrl.valueChanges.subscribe(checked => this.toggleDarkTheme(checked))
+  }
+
+  toggleDarkTheme(checked: boolean) {
+    if (checked) {
       document.body.classList.add('dark')
     } else {
       document.body.classList.remove('dark')
     }
+    localStorage.setItem('dark-mode', JSON.stringify(checked));
+  }
+
+  async signIn() {
+    await this.firestore.signIn()
   }
 }

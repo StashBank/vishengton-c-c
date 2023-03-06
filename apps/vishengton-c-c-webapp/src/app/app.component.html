@@ -1,19 +1,26 @@
-<div class="root-container" [class.root-is-mobile]="mobileQuery.matches" >
+<div class="root-container" [class.root-is-mobile]="(isMobile$ | async)" >
   <mat-toolbar color="primary" class="root-toolbar">
     <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
     <div class="root-app-name">
       <span class="flex-1">Vishengton Car Care</span>
-      <mat-slide-toggle color="warn" (change)="toggleDarkTheme($event)">Dark</mat-slide-toggle>
+      <mat-slide-toggle color="warn" [formControl]="darkModeCtrl">Dark</mat-slide-toggle>
     </div>
   </mat-toolbar>
 
-  <mat-sidenav-container class="root-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
-    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
-      <vcc-left-side-nav></vcc-left-side-nav>
+  <mat-sidenav-container class="root-sidenav-container" [style.marginTop.px]="(isMobile$ | async) ? 56 : 0">
+    <mat-sidenav #snav [mode]="(isMobile$ | async) ? 'over' : 'side'" [fixedInViewport]="(isMobile$ | async)" fixedTopGap="56">
+      <vcc-left-side-nav (menuItemClick)="snav.close()"></vcc-left-side-nav>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <router-outlet></router-outlet>
+      <ng-container *ngIf="isAuthorized$ | async; else login">
+        <router-outlet></router-outlet>
+      </ng-container>
+      <ng-template #login>
+        <div class="mt-20 flex flex-row justify-center items-center">
+          <button mat-flat-button color="primary" (click)="signIn()">Sign In</button>
+        </div>
+      </ng-template>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

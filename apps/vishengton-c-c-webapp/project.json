@@ -17,6 +17,15 @@
         "inlineStyleLanguage": "scss",
         "assets": [
           "apps/vishengton-c-c-webapp/src/favicon.ico",
+          "apps/vishengton-c-c-webapp/src/favicon-32x32.png",
+          "apps/vishengton-c-c-webapp/src/favicon-16x16.png",
+          "apps/vishengton-c-c-webapp/src/apple-touch-icon.png",
+          "apps/vishengton-c-c-webapp/src/android-chrome-192x192.png",
+          "apps/vishengton-c-c-webapp/src/android-chrome-256x256.png",
+          "apps/vishengton-c-c-webapp/src/safari-pinned-tab.svg",
+          "apps/vishengton-c-c-webapp/src/mstile-150x150.png",
+          "apps/vishengton-c-c-webapp/src/site.webmanifest",
+          "apps/vishengton-c-c-webapp/src/browserconfig.xml",
           "apps/vishengton-c-c-webapp/src/assets"
         ],
         "styles": ["apps/vishengton-c-c-webapp/src/styles.scss"],

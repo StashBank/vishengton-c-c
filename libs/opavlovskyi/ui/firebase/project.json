@@ -1,0 +1,50 @@
+{
+  "name": "opavlovskyi-ui-firebase",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/opavlovskyi/ui/firebase/src",
+  "prefix": "vishengton-c-c",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/opavlovskyi/ui/firebase/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/opavlovskyi/ui/firebase/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/opavlovskyi/ui/firebase/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/opavlovskyi/ui/firebase/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/opavlovskyi/ui/firebase/**/*.ts",
+          "libs/opavlovskyi/ui/firebase/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["opavlovskyi", "ui", "webapp", "firebase"]
+}
