@@ -1,1 +1,21 @@
-<vcc-nx-welcome></vcc-nx-welcome> <router-outlet></router-outlet>
+<div class="root-container" [class.root-is-mobile]="mobileQuery.matches" >
+  <mat-toolbar color="primary" class="root-toolbar">
+    <button mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
+    <div class="root-app-name">
+      <span class="flex-1">Vishengton Car Care</span>
+      <mat-slide-toggle color="warn" (change)="toggleDarkTheme($event)">Dark</mat-slide-toggle>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="root-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+    <mat-sidenav #snav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <vcc-left-side-nav></vcc-left-side-nav>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+

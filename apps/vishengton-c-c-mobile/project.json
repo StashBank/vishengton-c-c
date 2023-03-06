@@ -74,8 +74,5 @@
       }
     }
   },
-  "tags": [
-    "mobile"
-  ],
-  "root": "apps/vishengton-c-c-mobile"
+  "tags": ["mobile"]
 }

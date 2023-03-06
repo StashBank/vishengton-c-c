@@ -18,7 +18,8 @@
       "@opavlovskyi/ui/common": ["libs/opavlovskyi/ui/common/src/index.ts"],
       "@opavlovskyi/utils": ["libs/opavlovskyi/utils/src/index.ts"],
       "@vcc/core": ["libs/core/src/index.ts"],
-      "@vcc/core/interfaces": ["libs/core/src/lib/interfaces/index.ts"]
+      "@vcc/core/interfaces": ["libs/core/src/lib/interfaces/index.ts"],
+      "@vcc/ui/core": ["libs/webapp/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
