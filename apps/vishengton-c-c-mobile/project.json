@@ -66,7 +66,16 @@
           "apps/vishengton-c-c-mobile/src/**/*.html"
         ]
       }
+    },
+    "postinstall": {
+      "executor": "nx:run-script",
+      "options": {
+        "script": "postinstall"
+      }
     }
   },
-  "tags": ["mobile"]
+  "tags": [
+    "mobile"
+  ],
+  "root": "apps/vishengton-c-c-mobile"
 }
