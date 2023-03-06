@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@opavlovskyi/ui/common": ["libs/opavlovskyi/ui/common/src/index.ts"],
       "@opavlovskyi/ui/components": [
         "libs/opavlovskyi/components/src/index.ts"
       ],

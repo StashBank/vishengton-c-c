@@ -1,0 +1,51 @@
+{
+  "name": "opavlovskyi-ui-common",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/opavlovskyi/ui/common/src",
+  "prefix": "opavlovskyi",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/opavlovskyi/ui/common/ng-package.json",
+        "tailwindConfig": "libs/opavlovskyi/ui/common/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/opavlovskyi/ui/common/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/opavlovskyi/ui/common/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/opavlovskyi/ui/common/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/opavlovskyi/ui/common/**/*.ts",
+          "libs/opavlovskyi/ui/common/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": ["opavlovskyi", "ui"]
+}
