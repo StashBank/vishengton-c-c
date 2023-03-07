@@ -1,6 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { getAuth, signInWithPopup, OAuthCredential, getAdditionalUserInfo, onAuthStateChanged, User } from "firebase/auth";
-import { GoogleAuthProvider } from "firebase/auth";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+  OAuthCredential,
+  getAdditionalUserInfo,
+  onAuthStateChanged
+} from "firebase/auth";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { FIRESTORE } from './injection.tokens';
@@ -11,6 +17,10 @@ export class FirebaseAppService {
   private readonly provider = new GoogleAuthProvider();
   private readonly auth = getAuth(this.firestore.app);
   private readonly _isAuthorized$ =  new BehaviorSubject<boolean>(false);
+
+  get app() {
+    return this.firestore.app
+  }
 
   get isAuthorized$(): Observable<boolean> {
     return this._isAuthorized$.asObservable();
@@ -56,4 +66,5 @@ export class FirebaseAppService {
   signOut() {
     return this.auth.signOut()
   }
+
 }

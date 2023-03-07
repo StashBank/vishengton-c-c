@@ -2,8 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
-import { CoreModule } from '@vcc/ui/core';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { CoreWebappModule } from '@vcc/ui/core';
 
 interface IMenuItem {
   title: string;
@@ -16,7 +15,7 @@ interface IMenuItem {
 @Component({
   selector: 'vcc-left-side-nav',
   standalone: true,
-  imports: [CoreModule],
+  imports: [CoreWebappModule],
   templateUrl: './left-side-nav.component.html',
   styleUrls: ['./left-side-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,6 +24,10 @@ export class LeftSideNavComponent {
   @Output() menuItemClick = new EventEmitter<void>();
 
   menuNavItems: IMenuItem[] = [
+    {
+      route: 'home',
+      title: 'Home'
+    },
     {
       route: 'debts',
       title: 'Debts'

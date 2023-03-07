@@ -19,4 +19,4 @@ const modules = [
   imports: [modules],
   exports: [modules]
 })
-export class CoreModule {}
+export class CoreWebappModule {}

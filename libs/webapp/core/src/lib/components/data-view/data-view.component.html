@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row mb-4">
+    <span class="text-xl flex-1">{{ title }}</span>
+    <button mat-flat-button (click)="add.emit()">Add</button>
+  </div>
+  <table mat-table [dataSource]="data">
+    <ng-container *ngFor="let desc of descriptor">
+      <ng-container [matColumnDef]="desc.path">
+        <th mat-header-cell *matHeaderCellDef>{{ desc.caption }}</th>
+        <td mat-cell *matCellDef="let rowData" (click)="selectRow(rowData)" >
+          <ng-container [ngSwitch]="desc.dataType">
+            <div *ngSwitchCase="'date'">{{ rowData[desc.path] | firebaseDate | date }}</div>
+            <div *ngSwitchCase="'currency'">{{ rowData[desc.path] | currency }}</div>
+            <div *ngSwitchCase="'number'">{{ rowData[desc.path] | number }}</div>
+            <div *ngSwitchCase="'custom'">{{ desc?.converter(rowData[desc.path]) || rowData[desc.path] }}</div>
+            <div *ngSwitchDefault>{{ rowData[desc.path] }}</div>
+          </ng-container>
+        </td>
+      </ng-container>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+</div>

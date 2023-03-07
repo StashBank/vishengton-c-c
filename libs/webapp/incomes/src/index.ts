@@ -1,3 +1,2 @@
 export * from './lib/incomes.module';
-
-export * from './lib/lib.routes';
+export * from './lib/components/incomes/incomes.component';
