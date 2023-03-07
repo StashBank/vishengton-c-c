@@ -1,0 +1,34 @@
+{
+  "name": "webapp-rest-api-client",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/webapp/rest-api-client/src",
+  "prefix": "vishengton-c-c",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/webapp/rest-api-client/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/webapp/rest-api-client/**/*.ts",
+          "libs/webapp/rest-api-client/**/*.html"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
