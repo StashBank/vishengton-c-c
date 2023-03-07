@@ -23,6 +23,7 @@
       "@vcc/ui/core": ["libs/webapp/core/src/index.ts"],
       "@vcc/webapp/clients": ["libs/webapp/clients/src/index.ts"],
       "@vcc/webapp/debt": ["libs/webapp/debts/src/index.ts"],
+      "@vcc/webapp/home": ["libs/webapp/home/src/index.ts"],
       "@vcc/webapp/incomes": ["libs/webapp/incomes/src/index.ts"]
     }
   },
