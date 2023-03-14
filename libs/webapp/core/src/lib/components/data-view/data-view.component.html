@@ -3,7 +3,7 @@
     <span class="text-xl flex-1">{{ title }}</span>
     <button mat-flat-button (click)="add.emit()">Add</button>
   </div>
-  <table mat-table [dataSource]="data">
+  <table mat-table [dataSource]="data" class="invisible md:visible">
     <ng-container *ngFor="let desc of descriptor">
       <ng-container [matColumnDef]="desc.path">
         <th mat-header-cell *matHeaderCellDef>{{ desc.caption }}</th>
