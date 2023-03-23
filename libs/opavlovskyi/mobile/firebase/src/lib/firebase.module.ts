@@ -1,5 +1,4 @@
-import { APP_INITIALIZER, NgModule} from '@angular/core';
-import { FirebaseAppService } from './firebase.service';
+import { NgModule} from '@angular/core';
 
 
 @NgModule({

@@ -72,7 +72,26 @@
       "options": {
         "script": "postinstall"
       }
+    },
+    "nimbus-cloud-build": {
+      "executor": "@valor-software/nimbus-cloud-build-nx:build",
+      "options": {
+        "showLog": false
+      },
+      "configurations": {
+        "release": {
+          "release": true,
+          "aab": false,
+          "forDevice": false
+        }
+      }
+    },
+    "nimbus-login": {
+      "executor": "@valor-software/nimbus-cloud-build-nx:login",
+      "options": {}
     }
   },
-  "tags": ["mobile"]
+  "tags": [
+    "mobile"
+  ]
 }
