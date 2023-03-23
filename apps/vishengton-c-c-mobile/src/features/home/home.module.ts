@@ -6,6 +6,7 @@ import {
 import { Routes } from '@angular/router';
 import { NativeScriptRouterModule } from '@nativescript/angular';
 
+import { FirebaseModule } from '@opavlovskyi/mobile/firebase';
 import { SharedModule } from '../shared/shared.module';
 import { HOME_COMPONENTS, HomeComponent } from './components';
 
@@ -17,7 +18,11 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [SharedModule, NativeScriptRouterModule.forChild(routes)],
+  imports: [
+    SharedModule,
+    NativeScriptRouterModule.forChild(routes),
+    FirebaseModule
+  ],
   declarations: [...HOME_COMPONENTS],
   exports: [...HOME_COMPONENTS],
   schemas: [NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA]

@@ -1,11 +1,18 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+
+import { FirebaseModule } from '@opavlovskyi/mobile/firebase';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './features/shared/shared.module';
 import { AppRoutingModule } from './app.routing';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  imports: [CoreModule, SharedModule, AppRoutingModule],
+  imports: [
+    CoreModule,
+    SharedModule,
+    AppRoutingModule,
+    FirebaseModule,
+  ],
   declarations: [AppComponent],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]

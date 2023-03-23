@@ -1,0 +1,23 @@
+{
+  "name": "opavlovskyi-mobile-nativescript-firebase",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/opavlovskyi/mobile/nativescript-firebase/src",
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/opavlovskyi/mobile/nativescript-firebase/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "opavlovskyi",
+    "mobile"
+  ]
+}

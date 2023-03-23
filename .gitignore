@@ -39,3 +39,7 @@ testem.log
 Thumbs.db
 
 .angular
+
+#Firebase
+**/App_Resources/Android/src/google-services.json
+**/App_Resources/iOS/GoogleService-Info.plist

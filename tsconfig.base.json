@@ -10,26 +10,57 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@opavlovskyi/ui/common": ["libs/opavlovskyi/ui/common/src/index.ts"],
-      "@opavlovskyi/ui/firebase": ["libs/opavlovskyi/ui/firebase/src/index.ts"],
-      "@opavlovskyi/utils": ["libs/opavlovskyi/utils/src/index.ts"],
-      "@vcc/core": ["libs/core/src/index.ts"],
-      "@vcc/core/interfaces": ["libs/core/src/lib/interfaces/index.ts"],
-      "@vcc/ui/core": ["libs/webapp/core/src/index.ts"],
-      "@vcc/webapp/auth": ["libs/webapp/auth/src/index.ts"],
-      "@vcc/webapp/clients": ["libs/webapp/clients/src/index.ts"],
-      "@vcc/webapp/debts": ["libs/webapp/debts/src/index.ts"],
-      "@vcc/webapp/home": ["libs/webapp/home/src/index.ts"],
-      "@vcc/webapp/incomes": ["libs/webapp/incomes/src/index.ts"],
+      "@opavlovskyi/ui/common": [
+        "libs/opavlovskyi/ui/common/src/index.ts"
+      ],
+      "@opavlovskyi/ui/firebase": [
+        "libs/opavlovskyi/ui/firebase/src/index.ts"
+      ],
+      "@opavlovskyi/utils": [
+        "libs/opavlovskyi/utils/src/index.ts"
+      ],
+      "@vcc/core": [
+        "libs/core/src/index.ts"
+      ],
+      "@vcc/core/interfaces": [
+        "libs/core/src/lib/interfaces/index.ts"
+      ],
+      "@vcc/ui/core": [
+        "libs/webapp/core/src/index.ts"
+      ],
+      "@vcc/webapp/auth": [
+        "libs/webapp/auth/src/index.ts"
+      ],
+      "@vcc/webapp/clients": [
+        "libs/webapp/clients/src/index.ts"
+      ],
+      "@vcc/webapp/debts": [
+        "libs/webapp/debts/src/index.ts"
+      ],
+      "@vcc/webapp/home": [
+        "libs/webapp/home/src/index.ts"
+      ],
+      "@vcc/webapp/incomes": [
+        "libs/webapp/incomes/src/index.ts"
+      ],
       "@vcc/webapp/rest-api-client": [
         "libs/webapp/rest-api-client/src/index.ts"
+      ],
+      "@opavlovskyi/mobile/firebase": [
+        "libs/opavlovskyi/mobile/firebase/src/index.ts"
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
