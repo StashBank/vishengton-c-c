@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FirebaseAppService } from '@opavlovskyi/mobile/firebase';
-import { of } from 'rxjs';
 import { setStatusBarColor } from '../../../utils';
 
 @Component({
@@ -11,8 +10,7 @@ import { setStatusBarColor } from '../../../utils';
 export class HomeComponent {
 
   get isAuthorized$() {
-    //return this.firebaseApp.isAuthorized$
-    return of(false);
+    return this.firebaseApp.isAuthorized$;
   }
 
   constructor(

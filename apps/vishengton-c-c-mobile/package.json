@@ -7,10 +7,15 @@
     "postinstall": "node ./tools/postinstall.js"
   },
   "dependencies": {
-    "@nativescript/core": "*"
+    "@nativescript/core": "*",
+    "@nativescript/firebase-auth": "../../node_modules/@nativescript/firebase-auth",
+    "@nativescript/firebase-core": "../../node_modules/@nativescript/firebase-core",
+    "@nativescript/firebase-database": "../../node_modules/@nativescript/firebase-database",
+    "@nativescript/google-signin": "../../node_modules/@nativescript/google-signin"
   },
   "devDependencies": {
-    "@nativescript/android": "~8.4.0",
-    "@nativescript/ios": "~8.4.0"
+    "@angular/compiler": "15.0.0",
+    "@nativescript/android": "8.4.0",
+    "@nativescript/ios": "8.4.0"
   }
 }

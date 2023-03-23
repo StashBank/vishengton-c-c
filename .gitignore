@@ -41,11 +41,16 @@ Thumbs.db
 .angular
 
 #Firebase
-**/App_Resources/Android/src/google-services.json
-**/App_Resources/iOS/GoogleService-Info.plist
+**/App_Resources/Android/**/google-services.json
+**/App_Resources/iOS/**/GoogleService-Info.plist
 
 
 # Nimbus
 .nimbus
 **/.nimbus
 **/**/.nimbus
+
+#Profiles
+.profiles
+**/.profiles
+**/**/.profiles

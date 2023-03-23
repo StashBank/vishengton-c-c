@@ -79,10 +79,22 @@
         "showLog": false
       },
       "configurations": {
-        "release": {
+        "release-android": {
           "release": true,
+          "platform": "android",
           "aab": false,
-          "forDevice": false
+          "keyStorePath": ".profiles/op-release-key.keystore",
+          "keyStorePassword": "12345678",
+          "keyStoreAlias": "op-rk",
+          "keyStoreAliasPassword": "12345678"
+        },
+        "release-ios": {
+          "release": true,
+          "platform": "ios",
+          "forDevice": true,
+          "profilePath": ".profiles/Oleksandr_Pavlovskyi_Profile.mobileprovision",
+          "certPath": ".profiles/OP_Test_Certificate.p12",
+          "certPassword": "12345678"
         }
       }
     },

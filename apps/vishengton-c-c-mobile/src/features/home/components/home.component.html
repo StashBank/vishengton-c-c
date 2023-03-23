@@ -2,7 +2,7 @@
 </ActionBar>
 <StackLayout class="p-20">
   <Label text="Enjoy" class="h1 text-center c-white"></Label>
-  <ng-container *ngIf="isAuthorized$ | async">
-    <button (tap)="signIn()">SignIn</button>
+  <ng-container *ngIf="!(isAuthorized$ | async)">
+    <button (tap)="signIn()">Sign-In</button>
   </ng-container>
 </StackLayout>
