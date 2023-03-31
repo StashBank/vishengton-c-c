@@ -1,8 +1,18 @@
-<ActionBar title="My App" class="action-bar" flat="true">
+<ActionBar title="{{appTitle}}" class="action-bar" flat="true">
 </ActionBar>
 <StackLayout class="p-20">
-  <Label text="Enjoy" class="h1 text-center c-white"></Label>
+  <Label [text]="helloText" class="h1 text-center c-white"></Label>
   <ng-container *ngIf="!(isAuthorized$ | async)">
-    <button (tap)="signIn()">Sign-In</button>
+    <GoogleSignInButton colorScheme='auto' colorStyle='standard' (tap)="signInWithGoogle()"></GoogleSignInButton>
+  
+    <TextField id=email hint="Email" secure="false" keyboardType="email" returnKeyType="done" autocorrect="false"
+      maxLength="100" (returnPress)="onReturnPress($event)">
+    </TextField>
+    <TextField id=password hint="Pasword" secure="true" returnKeyType="done" autocorrect="false"
+      maxLength="100" (returnPress)="onReturnPress($event)">
+    </TextField>
+
+    <Button (tap)="signInWithEmailAndPassword()">Sign-In</Button>
+  
   </ng-container>
 </StackLayout>

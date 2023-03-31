@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  appTitle: 'Vishengton Car Care',
+  helloText: 'Prod env'
 };

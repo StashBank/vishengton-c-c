@@ -41,7 +41,11 @@
     "android": {
       "executor": "@nativescript/nx:build",
       "options": {
-        "platform": "android"
+        "platform": "android",
+        "keyStorePath": ".profiles/op-release-key.keystore",
+        "keyStoreAlias": "op-rk",
+        "keyStoreAliasPassword": "12345678",
+        "keyStorePassword": "12345678"
       },
       "configurations": {
         "build": {
@@ -86,15 +90,21 @@
           "keyStorePath": ".profiles/op-release-key.keystore",
           "keyStorePassword": "12345678",
           "keyStoreAlias": "op-rk",
-          "keyStoreAliasPassword": "12345678"
+          "keyStoreAliasPassword": "12345678",
+          "fileReplacements": [
+            {
+              "replace": "./src/environments/environment.ts",
+              "with": "./src/environments/environment.prod.ts"
+            }
+          ]
         },
         "release-ios": {
           "release": true,
           "platform": "ios",
           "forDevice": true,
-          "profilePath": ".profiles/Oleksandr_Pavlovskyi_Profile.mobileprovision",
-          "certPath": ".profiles/OP_Test_Certificate.p12",
-          "certPassword": "12345678"
+          "provision": ".profiles/Oleksandr_Pavlovskyi_Profile.mobileprovision",
+          "certificate": ".profiles/OP_Test_Certificate.p12",
+          "certificatePassword": "12345678"
         }
       }
     },
