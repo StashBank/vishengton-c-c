@@ -4,13 +4,15 @@ import {MAT_BOTTOM_SHEET_DATA} from '@angular/material/bottom-sheet';
 import { FirebaseModule } from '@opavlovskyi/ui/firebase';
 import { CoreWebappModule } from '../../core.module';
 import { DataViewDescriptor } from '../../interfaces';
+import { ValueViewComponent } from '../value-view/value-view.component';
 
 @Component({
   selector: 'vishengton-c-c-data-view',
   standalone: true,
   imports: [
     CoreWebappModule,
-    FirebaseModule
+    FirebaseModule,
+    ValueViewComponent,
   ],
   templateUrl: './data-view.component.html',
   styleUrls: ['./data-view.component.scss'],
@@ -35,13 +37,13 @@ export class DataViewComponent {
   @Output() rowActionDelete = new EventEmitter<any>();
 
   get displayedColumns(): string[] {
-    return this.descriptor.map(d => d.path)
+    return [...this.descriptor.map(d => d.path), '_action_']
   }
 
   constructor(private bottomSheet: MatBottomSheet) {}
 
 
-  selectRow(rowData: any) {
+  onRowAction(rowData: any) {
     this.bottomSheet.open(DataViewActionsComponent, {
       data: {
         copy: () => this.rowActionCopy.emit(rowData),

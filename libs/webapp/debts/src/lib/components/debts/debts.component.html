@@ -1,5 +1,5 @@
 <ng-container *ngIf="addRecordFormShown">
-  <form class="row mt-4" [formGroup]="addRecordForm">
+  <form class="col md:row my-4 px-4 md:px-0" [formGroup]="addRecordForm">
     <mat-form-field>
       <mat-label>Choose a date</mat-label>
       <input matInput [matDatepicker]="picker" formControlName="date">
@@ -10,15 +10,15 @@
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name">
     </mat-form-field>
-    <div class="pl-4">
-      <mat-form-field>
-        <mat-label>Amount</mat-label>
-        <input type="number" matInput formControlName="amount">
-      </mat-form-field>
-    </div>
+    <mat-form-field>
+      <mat-label>Amount</mat-label>
+      <input type="number" matInput formControlName="amount">
+    </mat-form-field>
     <span class="flex-1"></span>
-    <button mat-flat-button (click)="hideAddRecordForm()">Cancel</button>
-    <button mat-flat-button color="primary" class="ml-2" (click)="saveRecord()">Save</button>
+    <div class="row align-center md:ml-4 w-full md:mb-[24px]">
+      <button mat-flat-button class="w-1/2 md:w-auto" (click)="hideAddRecordForm()">Cancel</button>
+      <button mat-flat-button color="primary" class="ml-2 w-1/2 md:w-auto" (click)="saveRecord()">Save</button>
+    </div>
   </form>
 </ng-container>
 <vishengton-c-c-data-view
@@ -26,4 +26,5 @@
   collectionName="debts"
   [data]="data$ | async"
   [descriptor]="dataViewDescriptor"
-  (add)="showAddRecordForm()"></vishengton-c-c-data-view>
+  (add)="showAddRecordForm()">
+</vishengton-c-c-data-view>

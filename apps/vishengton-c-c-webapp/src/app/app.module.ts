@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, NgModule } from '@angular/core';
 import { FirebaseModule } from '@opavlovskyi/ui/firebase'
 import { environment } from '../environments/environment';
 
@@ -8,6 +8,9 @@ import { environment } from '../environments/environment';
   ],
   exports: [
     FirebaseModule
+  ],
+  providers: [
+    {provide: DEFAULT_CURRENCY_CODE, useValue: '₴'}
   ]
 })
 export class AppModule {}

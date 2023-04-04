@@ -1,0 +1,1 @@
+export type DataType = 'string' | 'date' | 'currency' | 'number' | 'custom';

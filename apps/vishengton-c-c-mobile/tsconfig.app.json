@@ -2,6 +2,7 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
+    "strictTemplates": true,
     "types": []
   },
   "include": ["./src/environments/environment.*.ts"],
