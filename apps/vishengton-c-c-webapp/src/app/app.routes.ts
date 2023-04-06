@@ -8,6 +8,11 @@ export const appRoutes: Route[] = [
     redirectTo: 'home'
   },
   {
+    path: 'profile',
+    pathMatch: 'full',
+    loadComponent: () => import('./profile/profile.component').then(m => m.ProfileComponent)
+  },
+  {
     path: 'home',
     pathMatch: 'full',
     loadComponent: () => import('@vcc/webapp/home').then(m => m.HomeComponent)

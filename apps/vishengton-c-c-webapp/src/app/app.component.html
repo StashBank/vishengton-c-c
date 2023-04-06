@@ -3,7 +3,9 @@
     <button mat-icon-button (click)="toggleSideNavMenu()"><mat-icon>menu</mat-icon></button>
     <div class="root-app-name">
       <span class="flex-1">Vishengton Car Care</span>
-      <mat-slide-toggle color="warn" [formControl]="darkModeCtrl">Dark</mat-slide-toggle>
+      <ng-container *ngIf="profile$ | async as profile">
+        <img class="rounded-full w-10 h-10" [src]="profile.photoURL" routerLink="profile">
+      </ng-container>
     </div>
   </mat-toolbar>
 

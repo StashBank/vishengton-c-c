@@ -5,7 +5,9 @@ import {
   signInWithPopup,
   OAuthCredential,
   getAdditionalUserInfo,
-  onAuthStateChanged
+  onAuthStateChanged,
+  User,
+  getIdTokenResult
 } from "firebase/auth";
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
@@ -16,6 +18,7 @@ export class FirebaseAppService {
   private readonly firestore = inject(FIRESTORE);
   private readonly provider = new GoogleAuthProvider();
   private readonly auth = getAuth(this.firestore.app);
+  private readonly _user$ =  new BehaviorSubject<User|null>(null);
   private readonly _isAuthorized$ =  new BehaviorSubject<boolean>(false);
 
   get app() {
@@ -25,15 +28,22 @@ export class FirebaseAppService {
   get isAuthorized$(): Observable<boolean> {
     return this._isAuthorized$.asObservable();
   }
-
   get isAuthorized(): boolean {
     return this._isAuthorized$.getValue();
+  }
+
+  get user$(): Observable<User|null> {
+    return this._user$.asObservable();
+  }
+  get user(): User|null {
+    return this._user$.getValue();
   }
 
   constructor() {
     this.provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     this.auth.useDeviceLanguage();
     onAuthStateChanged(this.auth, user => {
+      this._user$.next(user)
       this._isAuthorized$.next(user != null)
     })
   }

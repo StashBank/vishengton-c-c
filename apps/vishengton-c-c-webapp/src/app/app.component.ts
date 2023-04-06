@@ -1,15 +1,15 @@
 import { RouterModule } from '@angular/router';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { map, Observable, take } from 'rxjs';
 
 import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
-import { IStorageValue, localStorageValue, microtask, timeout } from '@opavlovskyi/utils';
+import { IStorageValue, localStorageValue, timeout } from '@opavlovskyi/utils';
 import { CoreWebappModule } from '@vcc/ui/core';
 import { LeftSideNavComponent } from './left-side-nav/left-side-nav.component';
 import { AppModule } from './app.module';
+import { User } from 'firebase/auth';
 
 @Component({
   standalone: true,
@@ -23,13 +23,16 @@ import { AppModule } from './app.module';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, AfterViewInit {
+export class AppComponent implements AfterViewInit {
 
   @ViewChild('snav', { read: MatSidenav }) sideNavRef!: MatSidenav;
-  darkModeCtrl = new FormControl();
 
   get isAuthorized$(): Observable<boolean> {
     return this.firestore.isAuthorized$;
+  }
+
+  get profile$(): Observable<User|null> {
+    return this.firestore.user$;
   }
 
   private isMobile!: boolean;
@@ -39,9 +42,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     );
   }
 
-  @localStorageValue<boolean>('dark-mode', true)
-  private darkModeValue!: IStorageValue<boolean>;
-
   @localStorageValue<boolean>('left-side-menu-opened', true)
   private leftSideNavOpened!: IStorageValue<boolean>;
 
@@ -49,12 +49,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     private readonly breakpointObserver: BreakpointObserver,
     private readonly firestore: FirebaseAppService
   ) {}
-
-  ngOnInit(): void {
-    this.darkModeCtrl.valueChanges.subscribe(checked => this.toggleDarkTheme(checked))
-    const darkMode = this.darkModeValue.get();
-    this.darkModeCtrl.setValue(darkMode);
-  }
 
   @timeout(800)
   ngAfterViewInit(): void {
@@ -65,15 +59,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         this.sideNavRef.open()
       }
     });
-  }
-
-  toggleDarkTheme(checked: boolean) {
-    if (checked) {
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
-    this.darkModeValue.set(checked);
   }
 
   toggleSideNavMenu() {
