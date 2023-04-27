@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { IStorageValue, localStorageValue } from '@opavlovskyi/utils';
 import { CoreWebappModule } from '@vcc/ui/core';
 import { AuthModule } from '@vcc/webapp/auth';
+import { AppService } from '../app.service';
 
 @Component({
   selector: 'vcc-profile',
@@ -15,21 +16,15 @@ import { AuthModule } from '@vcc/webapp/auth';
 export class ProfileComponent implements OnInit {
   darkModeCtrl = new FormControl();
 
-  @localStorageValue<boolean>('dark-mode', true)
-  private darkModeValue!: IStorageValue<boolean>;
+  constructor(private readonly appService: AppService) {}
 
   ngOnInit(): void {
     this.darkModeCtrl.valueChanges.subscribe(checked => this.toggleDarkTheme(checked))
-    const darkMode = this.darkModeValue.get();
+    const darkMode = this.appService.darkMode;
     this.darkModeCtrl.setValue(darkMode);
   }
 
   toggleDarkTheme(checked: boolean) {
-    if (checked) {
-      document.body.classList.add('dark')
-    } else {
-      document.body.classList.remove('dark')
-    }
-    this.darkModeValue.set(checked);
+    this.appService.toggleDarkTheme(checked);
   }
 }

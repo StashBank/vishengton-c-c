@@ -1,7 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { FirebaseDbService } from '@opavlovskyi/ui/firebase';
+import { FirebaseRepository, InjectFirebaseRepository } from '@opavlovskyi/ui/firebase';
 import { CoreWebappModule, DataViewComponent, DataViewDescriptor } from '@vcc/ui/core';
+import { IDebt } from '../../interfaces';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Component({
   selector: 'vishengton-c-c-debts',
@@ -12,30 +14,34 @@ import { CoreWebappModule, DataViewComponent, DataViewDescriptor } from '@vcc/ui
   ],
   templateUrl: './debts.component.html',
   styleUrls: ['./debts.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DebtsComponent implements OnInit {
 
-  addRecordForm = this.fb.group({
-    date: [new Date()],
-    name: [null, [Validators.required]],
-    amount: [null, [Validators.required, Validators.pattern(/\d{1,}/)]]
+  saveRecordForm = this.fb.nonNullable.group({
+    id: this.fb.nonNullable.control(''),
+    date: this.fb.nonNullable.control(new Date()),
+    name: this.fb.nonNullable.control('', [Validators.required]),
+    amount: this.fb.nonNullable.control(0, [Validators.required, Validators.pattern(/\d{1,}/)])
   });
   addRecordFormShown = false;
-  data$!: Promise<any[]>;
+  data$ = new BehaviorSubject<IDebt[]>([]);
   dataViewDescriptor: DataViewDescriptor[] = [
     { path: 'date', caption: 'Date', dataType: 'date' },
     { path: 'name', caption: 'Name'},
     { path: 'amount', caption: 'Amount', dataType: 'currency' },
   ]
-  private readonly collectionName = 'debts';
 
-  private get collectionRef() {
-    return this.firebaseDb.collection(this.collectionName);
+  get sum$() {
+    return this.data$.pipe(
+      map(data => data.reduce((arg, curr) => arg+= curr.amount, 0))
+    )
   }
 
+  @InjectFirebaseRepository<IDebt>('debts')
+  private readonly firebaseRepository!: FirebaseRepository<IDebt>;
+
   constructor(
-    private readonly firebaseDb: FirebaseDbService,
     private readonly fb: FormBuilder,
   ) {}
 
@@ -48,17 +54,50 @@ export class DebtsComponent implements OnInit {
   }
 
   hideAddRecordForm() {
-    this.addRecordForm.reset();
+    this.saveRecordForm.reset();
     this.addRecordFormShown = false;
   }
   
   async saveRecord() {
-    await this.firebaseDb.add(this.collectionRef, this.addRecordForm.value);
+    const values = {...this.saveRecordForm.value}
+    if (values.id) {
+      await this.firebaseRepository.update(values.id, values);
+    } else {
+      delete values.id;
+      await this.firebaseRepository.create({
+        ...values
+      });
+    }
     this.hideAddRecordForm();
     this.loadData();
   }
 
-  loadData() {
-    this.data$ = this.firebaseDb.get(this.collectionRef);
+  async loadData() {
+    const data = await this.firebaseRepository.list();
+    this.data$.next(data)
+  }
+  
+  edit(entity: IDebt) {
+    this.saveRecordForm.reset({
+      ...entity,
+      date: new Date((entity.date as any).seconds * 1000)
+    })
+    this.showAddRecordForm()
+  }
+
+  copy(entity: IDebt) {
+    const values = entity as Omit<IDebt, 'id'>
+    this.saveRecordForm.reset({
+      ...values,
+      date: new Date((entity.date as any).seconds * 1000),
+      id: undefined
+    })
+    this.showAddRecordForm()
+  }
+
+  async remove(entity: IDebt) {
+    this.hideAddRecordForm();
+    await this.firebaseRepository.delete(entity.id)
+    this.loadData();
   }
 }

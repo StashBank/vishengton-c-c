@@ -1,5 +1,5 @@
 import { RouterModule } from '@angular/router';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { map, Observable, take } from 'rxjs';
@@ -10,6 +10,7 @@ import { CoreWebappModule } from '@vcc/ui/core';
 import { LeftSideNavComponent } from './left-side-nav/left-side-nav.component';
 import { AppModule } from './app.module';
 import { User } from 'firebase/auth';
+import { AppService } from './app.service';
 
 @Component({
   standalone: true,
@@ -23,7 +24,7 @@ import { User } from 'firebase/auth';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('snav', { read: MatSidenav }) sideNavRef!: MatSidenav;
 
@@ -45,10 +46,18 @@ export class AppComponent implements AfterViewInit {
   @localStorageValue<boolean>('left-side-menu-opened', true)
   private leftSideNavOpened!: IStorageValue<boolean>;
 
+  @localStorageValue<boolean>('dark-mode', true)
+  private darkModeValue!: IStorageValue<boolean>;
+
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
-    private readonly firestore: FirebaseAppService
+    private readonly firestore: FirebaseAppService,
+    private readonly appService: AppService,
   ) {}
+
+  ngOnInit(): void {
+    this.appService.init()
+  }
 
   @timeout(800)
   ngAfterViewInit(): void {

@@ -1,11 +1,22 @@
-import { inject } from '@angular/core';
-import { getFirestore, collection, CollectionReference, addDoc, getDocs } from 'firebase/firestore';
+import { Injectable, inject } from '@angular/core';
+import {
+  getFirestore,
+  collection,
+  doc,
+  CollectionReference,
+  addDoc,
+  setDoc,
+  getDocs,
+  getDoc,
+  deleteDoc,
+  WithFieldValue,
+  DocumentData,
+  DocumentReference
+} from 'firebase/firestore';
 
-import { FIRESTORE } from './injection.tokens';
-
+@Injectable({ providedIn: 'root'})
 export class FirebaseDbService {
-  private readonly firestore = inject(FIRESTORE);
-
+  private readonly firestore = getFirestore()
   private get database() {
     return getFirestore(this.firestore.app)
   }
@@ -14,12 +25,37 @@ export class FirebaseDbService {
     return collection(this.database, path)
   }
 
-  add(reference: CollectionReference, value: unknown) {
-    return addDoc(reference, value)
+  doc<T>(path: string, id: string) {
+    return doc(this.database, path, id)
   }
 
-  get(reference: CollectionReference) {
-    return getDocs(reference).then(r => r.docs.map(doc => doc.data()))
+  add(reference: CollectionReference, value: WithFieldValue<DocumentData>) {
+    return addDoc(reference, value).then(doc => ({
+      ...doc,
+      id: doc.id
+    }))
+  }
+
+  set(reference: DocumentReference, value: WithFieldValue<DocumentData>) {
+    return setDoc(reference, value)
+  }
+
+  get<T>(reference: CollectionReference) {
+    return getDocs(reference).then(r => r.docs.map(doc => ({
+      ...doc.data(),
+      id: doc.id,
+    } as T)))
+  }
+
+  getDoc<T>(path: string, id: string) {
+    return getDoc(this.doc(path, id)).then(doc => ({
+      ...doc.data(),
+      id: doc.id,
+    } as T))
+  }
+
+  deleteDoc(reference: DocumentReference) {
+    return deleteDoc(reference)
   }
   
 }

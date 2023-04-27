@@ -7,15 +7,14 @@ import {
   getAdditionalUserInfo,
   onAuthStateChanged,
   User,
-  getIdTokenResult
 } from "firebase/auth";
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
-import { FIRESTORE } from './injection.tokens';
+import { getFirestore } from 'firebase/firestore';
 
 @Injectable()
 export class FirebaseAppService {
-  private readonly firestore = inject(FIRESTORE);
+  private readonly firestore = getFirestore();
   private readonly provider = new GoogleAuthProvider();
   private readonly auth = getAuth(this.firestore.app);
   private readonly _user$ =  new BehaviorSubject<User|null>(null);
