@@ -5,13 +5,13 @@ on:
       - main
 
 jobs:
-  stop_previous:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
-        with:
-          access_token: ${{ secrets.GITHUB_TOKEN }}
+  # stop_previous:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Cancel Previous Runs
+  #       uses: styfle/cancel-workflow-action@0.11.0
+  #       with:
+  #         access_token: ${{ secrets.GITHUB_TOKEN }}
 
   cache:
     runs-on: ubuntu-latest

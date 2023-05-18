@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FirebaseRepository, InjectFirebaseRepository } from '@opavlovskyi/ui/firebase';
 import {
@@ -18,6 +18,7 @@ import { IContragent } from '../../interfaces';
   ],
   templateUrl: './contragents.component.html',
   styleUrls: ['./contragents.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ContragentsComponent extends BaseDataViewComponent<IContragent> {
   override saveRecordForm =  this.fb.nonNullable.group({

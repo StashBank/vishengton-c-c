@@ -1,3 +1,4 @@
+<p>income works!</p>
 <ng-container *ngIf="addRecordFormShown">
   <form class="col md:row my-4 px-4 md:px-0" [formGroup]="saveRecordForm">
 
@@ -21,7 +22,7 @@
 
     <mat-form-field>
       <mat-label>Name</mat-label>
-      <input type="text" matInput formControlName="name" name="vcc-outcome" autocomplete="vcc-income-name">
+      <input type="text" matInput formControlName="name" name="vcc-outcome" autocomplete="vcc-outcome">
     </mat-form-field>
 
     <mat-form-field>
@@ -36,8 +37,9 @@
     </div>
   </form>
 </ng-container>
-<vishengton-c-c-data-view title="Incomes {{sum$ | async | currency}}"
-  collectionName="incomes"
+<vishengton-c-c-data-view
+  title="Outcomes {{sum$ | async | currency}}"
+  collectionName="outcomes"
   [data]="data$ | async"
   [descriptor]="dataViewDescriptor"
   (add)="showAddRecordForm()"

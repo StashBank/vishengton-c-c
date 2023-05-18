@@ -1,1 +1,31 @@
-<p>clients works!</p>
+<ng-container *ngIf="addRecordFormShown">
+  <form class="col md:row my-4 px-4 md:px-0" [formGroup]="saveRecordForm">
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input type="text" matInput formControlName="name" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input type="text" matInput formControlName="email" autocomplete="off">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Phone Number</mat-label>
+      <input type="text" matInput formControlName="phoneNumber" autocomplete="off">
+    </mat-form-field>
+    <span class="flex-1"></span>
+    <div class="row align-center md:ml-4 w-full md:mb-[24px]">
+      <button mat-flat-button class="w-1/2 md:w-auto" (click)="hideAddRecordForm()">Cancel</button>
+      <button mat-flat-button color="primary" class="ml-2 w-1/2 md:w-auto" (click)="saveRecord()">Save</button>
+    </div>
+  </form>
+</ng-container>
+<vishengton-c-c-data-view
+  title="Contragents"
+  collectionName="debts"
+  [data]="data$ | async"
+  [descriptor]="dataViewDescriptor"
+  (add)="showAddRecordForm()"
+  (rowActionEdit)="edit($event)"
+  (rowActionCopy)="copy($event)"
+  (rowActionDelete)="remove($event)">
+</vishengton-c-c-data-view>

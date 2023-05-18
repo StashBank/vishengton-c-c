@@ -1,1 +1,1 @@
-export * from './lib/outcomes/outcomes.component';
+export * from './lib/components/outcomes/outcomes.component';

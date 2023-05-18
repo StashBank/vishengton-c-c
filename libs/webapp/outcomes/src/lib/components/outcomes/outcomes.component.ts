@@ -10,21 +10,20 @@ import {
   ILookup
 } from '@vcc/ui/core';
 import { IContragent } from '@vcc/webapp/contragents';
-import { IDebt } from '../../interfaces';
+import { IOutcome } from '../../interfaces';
 
 @Component({
-  selector: 'vishengton-c-c-debts',
+  selector: 'vishengton-c-c-outcomes',
   standalone: true,
   imports: [
     CoreWebappModule,
     DataViewComponent,
   ],
-  templateUrl: './debts.component.html',
-  styleUrls: ['./debts.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: './outcomes.component.html',
+  styleUrls: ['./outcomes.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DebtsComponent extends BaseDataViewComponent<IDebt> {
-
+export class OutcomesComponent extends BaseDataViewComponent<IOutcome> {
   override saveRecordForm = this.fb.nonNullable.group({
     id: this.fb.nonNullable.control(''),
     contragent: this.fb.nonNullable.control<ILookup>({}),
@@ -48,8 +47,8 @@ export class DebtsComponent extends BaseDataViewComponent<IDebt> {
     )
   }
 
-  @InjectFirebaseRepository<IDebt>('debts')
-  protected override firebaseRepository!: FirebaseRepository<IDebt>;
+  @InjectFirebaseRepository<IOutcome>('outcomes')
+  protected override firebaseRepository!: FirebaseRepository<IOutcome>;
   @InjectFirebaseRepository<IContragent>('contragents')
   private contragentsRepository!: FirebaseRepository<IContragent>;
 
@@ -58,14 +57,14 @@ export class DebtsComponent extends BaseDataViewComponent<IDebt> {
     super.ngOnInit()
   }
 
-  protected override getCopyDefFormValues(entity: IDebt) {
+  protected override getCopyDefFormValues(entity: IOutcome) {
     return {
       ...entity,
       date: new Date((entity.date as any).seconds * 1000),
       id: undefined
     };
   }
-  protected override getEditDefFormValues(entity: IDebt) {
+  protected override getEditDefFormValues(entity: IOutcome) {
     return {
       ...entity,
       date: new Date((entity.date as any).seconds * 1000)
@@ -82,5 +81,4 @@ export class DebtsComponent extends BaseDataViewComponent<IDebt> {
         })
       ))
   }
-
 }
