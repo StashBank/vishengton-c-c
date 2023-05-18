@@ -1,5 +1,5 @@
 .setting {
-  @apply row p-2 my-2 max-w-md;
+  @apply flex flex-row items-center p-2 my-2 max-w-md;
   .name {
     @apply w-40;
   }

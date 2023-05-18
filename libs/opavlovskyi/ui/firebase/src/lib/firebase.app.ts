@@ -18,16 +18,16 @@ export class FirebaseAppService {
   private readonly provider = new GoogleAuthProvider();
   private readonly auth = getAuth(this.firestore.app);
   private readonly _user$ =  new BehaviorSubject<User|null>(null);
-  private readonly _isAuthorized$ =  new BehaviorSubject<boolean>(false);
+  private readonly _isAuthorized$ =  new BehaviorSubject<boolean|null>(null);
 
   get app() {
     return this.firestore.app
   }
 
-  get isAuthorized$(): Observable<boolean> {
+  get isAuthorized$(): Observable<boolean|null> {
     return this._isAuthorized$.asObservable();
   }
-  get isAuthorized(): boolean {
+  get isAuthorized(): boolean|null {
     return this._isAuthorized$.getValue();
   }
 

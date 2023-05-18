@@ -58,7 +58,7 @@ export class LeftSideNavComponent {
     }
   ]
 
-  get isAuthorized$(): Observable<boolean> {
+  get isAuthorized$(): Observable<boolean|null> {
     return this.firestore.isAuthorized$;
   }
 

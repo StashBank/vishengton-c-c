@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild('snav', { read: MatSidenav }) sideNavRef!: MatSidenav;
 
-  get isAuthorized$(): Observable<boolean> {
+  get isAuthorized$(): Observable<boolean|null> {
     return this.firestore.isAuthorized$;
   }
 
@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.appService.init()
     this.isAuthorized$.pipe(
-      filter(isAuthorized => !isAuthorized)
+      filter(isAuthorized => isAuthorized != null && !isAuthorized)
     )
     .subscribe({
       next: () => this.signIn()
