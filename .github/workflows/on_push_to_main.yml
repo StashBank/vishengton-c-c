@@ -1,8 +1,8 @@
-name: on push to master
+name: on push to main
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   stop_previous:
