@@ -1,1 +1,9 @@
-export type DataType = 'string' | 'date' | 'currency' | 'number' | 'custom';
+export type DataType =
+  | 'string'
+  | 'date'
+  | 'currency'
+  | 'number'
+  | 'phone'
+  | 'email'
+  | 'lookup'
+  | 'custom'

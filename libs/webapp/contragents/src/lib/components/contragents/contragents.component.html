@@ -1,34 +1,17 @@
 <ng-container *ngIf="addRecordFormShown">
   <form class="col md:row my-4 px-4 md:px-0" [formGroup]="saveRecordForm">
-
-    <mat-form-field>
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date" autocomplete="off">
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-
-    <mat-form-field>
-      <mat-label>Contragent</mat-label>
-      <mat-select formControlName="contragent" [compareWith]="compareLookupWith">
-        <ng-container *ngFor="let contragent of contragents$ | async">
-          <mat-option [value]="contragent">
-            {{ contragent.name }}
-          </mat-option>
-        </ng-container>
-      </mat-select>
-    </mat-form-field>
-
     <mat-form-field>
       <mat-label>Name</mat-label>
       <input type="text" matInput formControlName="name" autocomplete="off">
     </mat-form-field>
-
     <mat-form-field>
-      <mat-label>Amount</mat-label>
-      <input type="number" matInput formControlName="amount" autocomplete="off">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput formControlName="email" autocomplete="off">
     </mat-form-field>
-
+    <mat-form-field>
+      <mat-label>Phone Number</mat-label>
+      <input type="text" matInput formControlName="phoneNumber" autocomplete="off">
+    </mat-form-field>
     <span class="flex-1"></span>
     <div class="row align-center md:ml-4 w-full md:mb-[24px]">
       <button mat-flat-button class="w-1/2 md:w-auto" (click)="hideAddRecordForm()">Cancel</button>
@@ -37,7 +20,7 @@
   </form>
 </ng-container>
 <vishengton-c-c-data-view
-  title="Debts {{sum$ | async | currency}}"
+  title="Contragents"
   collectionName="debts"
   [data]="data$ | async"
   [descriptor]="dataViewDescriptor"

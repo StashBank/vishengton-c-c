@@ -2,7 +2,7 @@ import { Directive, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map } from 'rxjs';
 import { FirebaseRepository } from '@opavlovskyi/ui/firebase';
-import { BaseEntity, DataViewDescriptor } from '../interfaces';
+import { BaseEntity, DataViewDescriptor, ILookup } from '../interfaces';
 
 @Directive({ })
 export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnInit {
@@ -11,14 +11,6 @@ export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnI
   addRecordFormShown = false;
   abstract saveRecordForm: FormGroup;
   abstract dataViewDescriptor: DataViewDescriptor[];
-
-  get sum$() {
-    return this.data$.pipe(
-      map(data => data.reduce(
-        (arg, curr) => arg+= this.getAmount(curr), 0)
-      )
-    )
-  }
 
   protected readonly fb = inject(FormBuilder);
   protected readonly abstract firebaseRepository: FirebaseRepository<T>;
@@ -69,13 +61,20 @@ export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnI
     this.showAddRecordForm();
   }
 
+  compareLookupWith(o1: ILookup, o2: ILookup): boolean {
+    return o1.id === o2.id
+  }
+
   async remove(entity: T) {
     this.hideAddRecordForm();
     await this.firebaseRepository.delete(entity.id);
     this.loadData();
   }
 
-  protected abstract getAmount(entity: T): number;
-  protected abstract getCopyDefFormValues(entity: T): any;
-  protected abstract getEditDefFormValues(entity: T): any;
+  protected getCopyDefFormValues(entity: T): unknown {
+    return entity;
+  }
+  protected getEditDefFormValues(entity: T): unknown {
+    return entity;
+  }
 }
