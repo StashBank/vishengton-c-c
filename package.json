@@ -2,7 +2,9 @@
   "name": "vishengton-c-c",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "serve": "npx nx run vishengton-c-c-webapp:serve"
+  },
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "15.0.0",
