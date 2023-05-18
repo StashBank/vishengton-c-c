@@ -1,0 +1,59 @@
+name: on push to master
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  stop_previous:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
+  cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: node-${{ hashFiles('**/package-lock.json') }}
+      - uses: actions/setup-node@v2
+        with:
+           node-version: '16.14.0'
+      - run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
+  deploy-to-firebase:
+    needs: cache
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            ~/.npm
+            node_modules
+          key: node-${{ hashFiles('**/package-lock.json') }}
+      - uses: actions/setup-node@v2
+        with:
+           node-version: '16.14.0'
+      - run: npm ci
+      - run: npx nx run vishengton-c-c-webapp:build:production
+      
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}'
+          channelId: live
+          projectId: nimbus-administration     
