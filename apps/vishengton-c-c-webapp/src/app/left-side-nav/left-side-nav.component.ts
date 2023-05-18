@@ -5,9 +5,10 @@ import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
 import { CoreWebappModule } from '@vcc/ui/core';
 
 interface IMenuItem {
-  title: string;
+  title?: string;
   route?: string;
   icon?: string;
+  divider?: boolean;
   canExec?: () => boolean,
   click?: () => void
 }
@@ -47,6 +48,9 @@ export class LeftSideNavComponent {
     {
       route: 'contragents',
       title: 'Contragents'
+    },
+    {
+      divider: true
     },
     {
       title: 'Sign Out',
