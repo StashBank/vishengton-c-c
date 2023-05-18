@@ -37,8 +37,16 @@ export class LeftSideNavComponent {
       title: 'Incomes'
     },
     {
+      route: 'outcomes',
+      title: 'Outcomes'
+    },
+    {
       route: 'clients',
       title: 'Clients'
+    },
+    {
+      route: 'contragents',
+      title: 'Contragents'
     },
     {
       title: 'Sign Out',

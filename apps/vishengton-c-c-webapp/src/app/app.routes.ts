@@ -22,12 +22,20 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('@vcc/webapp/clients').then(m => m.ClientsComponent)
   },
   {
+    path: 'contragents',
+    loadComponent: () => import('@vcc/webapp/contragents').then(m => m.ContragentsComponent)
+  },
+  {
     path: 'debts',
     loadComponent: () => import('@vcc/webapp/debts').then(m => m.DebtsComponent)
   },
   {
     path: 'incomes',
     loadComponent: () => import('@vcc/webapp/incomes').then(m => m.IncomesComponent)
+  },
+  {
+    path: 'outcomes',
+    loadComponent: () => import('@vcc/webapp/outcomes').then(m => m.OutcomesComponent)
   },
   {
     path: '**',
