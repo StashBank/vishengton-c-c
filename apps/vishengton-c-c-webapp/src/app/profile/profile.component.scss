@@ -1,0 +1,9 @@
+.setting {
+  @apply row p-2 my-2 max-w-md;
+  .name {
+    @apply w-40;
+  }
+  .value {
+    @apply flex-1 flex justify-end items-center;
+  }
+}

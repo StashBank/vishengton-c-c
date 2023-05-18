@@ -2,7 +2,7 @@ import { RouterModule } from '@angular/router';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { map, Observable, take } from 'rxjs';
+import { filter, map, Observable, take } from 'rxjs';
 
 import { FirebaseAppService } from '@opavlovskyi/ui/firebase';
 import { IStorageValue, localStorageValue, timeout } from '@opavlovskyi/utils';
@@ -57,6 +57,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.appService.init()
+    this.isAuthorized$.pipe(
+      filter(isAuthorized => !isAuthorized)
+    )
+    .subscribe({
+      next: () => this.signIn()
+    })
   }
 
   @timeout(800)
