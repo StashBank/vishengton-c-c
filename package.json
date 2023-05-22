@@ -6,7 +6,6 @@
     "serve": "npx nx run vishengton-c-c-webapp:serve",
     "start": "npx nx run vishengton-c-c-webapp:serve"
   },
-  "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "15.0.0",
     "@angular-devkit/core": "15.0.0",
