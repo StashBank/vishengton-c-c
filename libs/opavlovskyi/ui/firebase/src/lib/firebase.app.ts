@@ -14,11 +14,11 @@ import { getFirestore } from 'firebase/firestore';
 
 @Injectable()
 export class FirebaseAppService {
-  private readonly firestore = getFirestore();
-  private readonly provider = new GoogleAuthProvider();
-  private readonly auth = getAuth(this.firestore.app);
-  private readonly _user$ =  new BehaviorSubject<User|null>(null);
-  private readonly _isAuthorized$ =  new BehaviorSubject<boolean|null>(null);
+  protected readonly firestore = getFirestore();
+  protected readonly provider = new GoogleAuthProvider();
+  protected readonly auth = getAuth(this.firestore.app);
+  protected readonly _user$ =  new BehaviorSubject<User|null>(null);
+  protected readonly _isAuthorized$ =  new BehaviorSubject<boolean|null>(null);
 
   get app() {
     return this.firestore.app

@@ -1,10 +1,13 @@
 import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { QueryConstraint, query, where } from 'firebase/firestore';
 import { FirebaseDbService } from './firebase.database';
+import { FirebaseAppService } from './firebase.app';
 
 export function InjectFirebaseRepository<T>(collectionName: string) {
   return (target: any, propertyKey: any) => {
     const firebaseDb = new FirebaseDbService()
-    target[propertyKey as string] = new FirebaseRepository<T>(firebaseDb, collectionName)
+    const firebaseApp = new FirebaseAppService();
+    target[propertyKey as string] = new FirebaseRepository<T>(firebaseDb, firebaseApp,collectionName)
   }
 }
 
@@ -13,19 +16,36 @@ export const COLLECTION_NAME = new InjectionToken<string>('collectionName')
 @Injectable({ providedIn: 'root' })
 export class FirebaseRepository<T> {
 
-  private get collection() {
+  protected get collection() {
     return this.firebaseDb.collection(this.collectionName)
   }
 
+  protected get currentUserId() {
+    return this.firebaseApp.user?.uid as string;
+  }
+
   constructor(
-    private readonly firebaseDb: FirebaseDbService,
+    protected readonly firebaseDb: FirebaseDbService,
+    protected readonly firebaseApp: FirebaseAppService,
     @Inject(COLLECTION_NAME)
     @Optional()
     private readonly collectionName: string,
   ) {}
 
   list() {
-    return this.firebaseDb.get<T>(this.collection)
+    const q = query(
+      this.collection,
+      where('createdById', '==' ,this.currentUserId)
+    )
+    return this.firebaseDb.get<T>(q)
+  }
+
+  query(...queryConstraints: QueryConstraint[]) {
+    const q = query(
+      this.collection,
+      ...queryConstraints
+    )
+    return this.firebaseDb.get<T>(q)
   }
 
   getById(id: string) {
@@ -33,13 +53,27 @@ export class FirebaseRepository<T> {
   }
 
   create(value: { [x: string]: any; }) {
-    return this.firebaseDb.add(this.collection, value)
+    const userId = this.currentUserId;
+    const timestamp = new Date();
+    return this.firebaseDb.add(this.collection, {
+      createdById: userId,
+      createdAt: timestamp,
+      updatedById: userId,
+      updatedAt: timestamp,
+      ...value
+    })
   }
 
   update(id: string, value: { [x: string]: any; }) {
+    const userId = this.currentUserId;
+    const timestamp = new Date()
     return this.firebaseDb.set(
       this.firebaseDb.doc(this.collectionName, id),
-      value
+      {
+        updatedById: userId,
+        updatedAt: timestamp,
+        ...value
+      }
     )
   }
 

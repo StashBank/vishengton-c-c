@@ -11,7 +11,8 @@ import {
   deleteDoc,
   WithFieldValue,
   DocumentData,
-  DocumentReference
+  DocumentReference,
+  Query
 } from 'firebase/firestore';
 
 @Injectable({ providedIn: 'root'})
@@ -29,29 +30,33 @@ export class FirebaseDbService {
     return doc(this.database, path, id)
   }
 
-  add(reference: CollectionReference, value: WithFieldValue<DocumentData>) {
-    return addDoc(reference, value).then(doc => ({
+  async add(reference: CollectionReference, value: WithFieldValue<DocumentData>) {
+    const doc = await addDoc(reference, value);
+    return {
       ...doc,
       id: doc.id
-    }))
+    }
   }
 
   set(reference: DocumentReference, value: WithFieldValue<DocumentData>) {
     return setDoc(reference, value)
   }
 
-  get<T>(reference: CollectionReference) {
-    return getDocs(reference).then(r => r.docs.map(doc => ({
-      ...doc.data(),
-      id: doc.id,
-    } as T)))
+  async get<T>(query: Query<DocumentData>) {
+    const response = await  getDocs(query)
+    return response.docs.map(doc => ({
+        ...doc.data(),
+        id: doc.id,
+      } as T)
+    )
   }
 
-  getDoc<T>(path: string, id: string) {
-    return getDoc(this.doc(path, id)).then(doc => ({
-      ...doc.data(),
-      id: doc.id,
-    } as T))
+  async getDoc<T>(path: string, id: string) {
+    const docSNapshot = await getDoc(this.doc(path, id))
+    return {
+        ...docSNapshot.data(),
+        id: docSNapshot.id,
+      } as T
   }
 
   deleteDoc(reference: DocumentReference) {
