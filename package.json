@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "serve": "npx nx run vishengton-c-c-webapp:serve"
+    "serve": "npx nx run vishengton-c-c-webapp:serve",
+    "start": "npx nx run vishengton-c-c-webapp:serve"
   },
   "private": true,
   "devDependencies": {
@@ -32,7 +33,6 @@
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
-    "@valor-software/nimbus-cloud-build-plugin": "file:../nimbus/dist/packages/nimbus-cloud-build-plugin",
     "autoprefixer": "10.4.0",
     "cypress": "12.2.0",
     "eslint": "8.15.0",
