@@ -14,6 +14,7 @@ export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnI
 
   protected readonly fb = inject(FormBuilder);
   protected readonly abstract firebaseRepository: FirebaseRepository<T>;
+  protected entity!: BaseEntity;
   
   ngOnInit(): void {
     this.loadData();
@@ -29,7 +30,7 @@ export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnI
   }
   
   async saveRecord() {
-    const values = {...this.saveRecordForm.value}
+    const values = {...this.entity, ...this.saveRecordForm.value}
     if (values.id) {
       await this.firebaseRepository.update(values.id, values);
     } else {
@@ -48,6 +49,7 @@ export abstract class BaseDataViewComponent<T extends BaseEntity> implements OnI
   }
   
   edit(entity: T) {
+    this.entity = entity;
     this.saveRecordForm.reset(
       this.getEditDefFormValues(entity)
     )
