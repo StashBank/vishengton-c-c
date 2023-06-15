@@ -1,7 +1,8 @@
+import { IBaseEntity } from '@opavlovskyi/ui/common';
 import { BaseEntity } from '@vcc/ui/core';
 
 export interface IContragent extends BaseEntity {
-  name: string;
+  name?: string;
   email?: string;
   phoneNumber?: string;
   phones?: {

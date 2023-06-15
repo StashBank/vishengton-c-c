@@ -1,1 +1,3 @@
-export * from './lib/opavlovskyi-ui-common/opavlovskyi-ui-common.component';
+export * from './lib/enums';
+export * from './lib/interfaces';
+export * from './lib/components';
