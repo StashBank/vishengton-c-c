@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { FirebaseRepository, InjectFirebaseRepository } from '@opavlovskyi/ui/firebase';
 import {
@@ -8,6 +8,7 @@ import {
   DataViewDescriptor
 } from '@vcc/ui/core';
 import { IContragent } from '../../interfaces';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'vishengton-c-c-contragents',
@@ -34,4 +35,10 @@ export class ContragentsComponent extends BaseDataViewComponent<IContragent> {
   ]
   @InjectFirebaseRepository<IContragent>('contragents')
   protected override firebaseRepository!: FirebaseRepository<IContragent>;
+  protected router = inject(Router)
+  protected route = inject(ActivatedRoute)
+
+  onCreateNew() {
+    this.router.navigate(['new'], { relativeTo: this.route})
+  }
 }

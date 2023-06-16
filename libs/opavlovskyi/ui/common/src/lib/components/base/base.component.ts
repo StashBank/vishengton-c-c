@@ -1,21 +1,13 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Directive, Input, OnInit } from '@angular/core';
 
 import { IViewComponent } from '../../interfaces/view-component.interface';
 import { IViewConfig } from '../../interfaces/view-config.interface';
 import { BaseEntityFieldValue, IBaseEntity } from '../../interfaces/base.entity';
 
-@Component({
-  selector: 'opavlovskyi-base',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './base.component.html',
-  styleUrls: ['./base.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-})
-export abstract class BaseComponent<T extends IBaseEntity> implements IViewComponent<T> {
-  viewConfig!: IViewConfig<T>;
-  data?: T;
+@Directive()
+export abstract class BaseComponent<T extends IBaseEntity> implements IViewComponent<T>, OnInit {
+  @Input() viewConfig!: IViewConfig<T>;
+  @Input() data?: T;
 
   get value(): BaseEntityFieldValue {
     const valuePath = this.viewConfig.valuePath || ''
@@ -28,6 +20,15 @@ export abstract class BaseComponent<T extends IBaseEntity> implements IViewCompo
       (this.data as IBaseEntity)[valuePath] = value;
     }
   }
+
+  protected get dataType() {
+    return this.viewConfig.dataType;
+  }
+
+  ngOnInit(): void {
+    this.render();
+  }
+
 
   click(): void {
     if (this.viewConfig?.onClick) {
@@ -56,4 +57,6 @@ export abstract class BaseComponent<T extends IBaseEntity> implements IViewCompo
       this.viewConfig.onFocus(this.data);
     }
   }
+
+  protected abstract render(): void;
 }

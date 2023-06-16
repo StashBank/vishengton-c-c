@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { IViewConfig } from '@opavlovskyi/ui/common';
+import { DataType, IViewConfig, PageComponent } from '@opavlovskyi/ui/common';
 import { FirebaseRepository, InjectFirebaseRepository } from '@opavlovskyi/ui/firebase';
 import {
   CoreWebappModule,
@@ -15,6 +15,7 @@ import { IContragent } from '../../interfaces';
   imports: [
     CoreWebappModule,
     DataViewComponent,
+    PageComponent,
   ],
   templateUrl: './contragent.component.html',
   styleUrls: ['./contragent.component.scss'],
@@ -36,17 +37,35 @@ export class ContragentComponent <IContragent> {
       {
         id: 'name-input',
         name: 'Name',
-        valuePath: 'name'
+        valuePath: 'name',
+        dataType: DataType.string,
+        gridLayout: {
+          col: 1,
+          row: 1,
+          colSpan: 6
+        }
       },
       {
         id: 'phone-number-input',
         name: 'Phone Number',
-        valuePath: 'phoneNumber'
+        valuePath: 'phoneNumber',
+        dataType: DataType.string,
+        gridLayout: {
+          col: 6,
+          row: 1,
+          colSpan: 6
+        }
       },
       {
         id: 'email-input',
         name: 'Email',
-        valuePath: 'email'
+        valuePath: 'email',
+        dataType: DataType.string,
+        gridLayout: {
+          col: 1,
+          row: 2,
+          colSpan: 6
+        }
       },
     ]
   }
